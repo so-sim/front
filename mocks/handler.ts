@@ -1,8 +1,3 @@
-import { BASE_URL } from './../api/index';
-import { rest } from 'msw';
+import { groupHandler } from './api/groupHandler';
 
-export const handler = [
-  rest.get(`${BASE_URL}`, (req, res, ctx) => {
-    return res(ctx.json([]));
-  }),
-];
+export const handler = [...Object.values(groupHandler)];

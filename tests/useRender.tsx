@@ -12,11 +12,25 @@ const ThemeHOC = ({ children }: Props) => {
   return <ThemeProvider theme={theme}>{children}</ThemeProvider>;
 };
 
-const useRender = (children: JSX.Element | JSX.Element[], initailEntry = '/') => {
-  const queryClient = new QueryClient();
+const createTestQueryClient = () =>
+  new QueryClient({
+    defaultOptions: {
+      queries: {
+        retry: false,
+      },
+    },
+    logger: {
+      log: console.log,
+      warn: console.warn,
+      error: () => {},
+    },
+  });
+
+export const useRender = (children: JSX.Element | JSX.Element[], initailEntry = '/') => {
+  const testQueryClient = createTestQueryClient();
   return render(
     <ThemeHOC>
-      <QueryClientProvider client={queryClient}>
+      <QueryClientProvider client={testQueryClient}>
         <MemoryRouter initialEntries={[initailEntry]}>
           <Routes>{children}</Routes>
         </MemoryRouter>
@@ -25,4 +39,7 @@ const useRender = (children: JSX.Element | JSX.Element[], initailEntry = '/') =>
   );
 };
 
-export default useRender;
+export const createWrapper = () => {
+  const testQueryClient = createTestQueryClient();
+  return ({ children }: { children: React.ReactNode }) => <QueryClientProvider client={testQueryClient}>{children}</QueryClientProvider>;
+};

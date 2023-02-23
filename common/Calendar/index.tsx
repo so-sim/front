@@ -69,13 +69,13 @@ const Calendar: FC<CalnedrProps> = ({ cellType }) => {
           {monthList.map((weeks, idx) => (
             <Style.WeekWrap key={idx} onClick={goDetail}>
               {weeks.map((date) => (
-                <>
+                <div key={date.date()}>
                   {cellType === 'Tag' ? (
-                    <DateCellWithTag date={date} key={date.date()} isCurrentMonth={isCurrentMonth} isToday={isToday} />
+                    <DateCellWithTag date={date} isCurrentMonth={isCurrentMonth} isToday={isToday} />
                   ) : (
-                    <DateCellWithMark date={date} key={date.date()} isCurrentMonth={isCurrentMonth} isToday={isToday} />
+                    <DateCellWithMark date={date} isCurrentMonth={isCurrentMonth} isToday={isToday} />
                   )}
-                </>
+                </div>
               ))}
             </Style.WeekWrap>
           ))}

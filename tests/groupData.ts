@@ -1,13 +1,14 @@
 export const FakeGroup = {
-  name: '테스1',
+  title: '테스1',
   id: '1',
-  color: 'f86565',
+  coverColor: 'f86565',
+  type: '',
 };
 
 export const FakeGroups = [
-  { name: '테스1', color: '#f86565', id: '1' },
-  { name: '테스2', color: '#f89a65', id: '2' },
-  { name: '테스3', color: '#f8e065', id: '3' },
-  { name: '테스4', color: '#658ef8', id: '4' },
-  { name: '테스5', color: '#9465f8', id: '5' },
+  { title: '테스1', coverColor: '#f86565', id: '1', type: '' },
+  { title: '테스2', coverColor: '#f89a65', id: '2', type: '' },
+  { title: '테스3', coverColor: '#f8e065', id: '3', type: '' },
+  { title: '테스4', coverColor: '#658ef8', id: '4', type: '' },
+  { title: '테스5', coverColor: '#9465f8', id: '5', type: '' },
 ];

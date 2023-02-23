@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { Suspense, useState } from 'react';
 import { NavLink, useParams } from 'react-router-dom';
 import { SYSTEM } from '../../../../assets/icons/System';
 import { USER } from '../../../../assets/icons/User';
 import Modal from '../../../../common/Modal';
+import useGroupQuery from '../../../../queries/Group/useGroupQuery';
 import * as Style from './styles';
 
 const GROUP_TAPS = [
@@ -28,42 +29,48 @@ const GroupSideBar = () => {
     return param['*']?.split('/').includes(link) === true;
   };
 
+  const { data: groupData } = useGroupQuery(groupID);
+
   return (
     <>
-      <Style.Layout>
-        <Style.Header>안녕하세요안녕하세요안녕하세요</Style.Header>
-        <Style.TapContainer>
-          <span>모임관리</span>
-          {GROUP_TAPS.map((tap) => (
-            <NavLink to={`/group/${groupID}/${tap.link}`} key={tap.title}>
-              <Style.Selected isSelected={isSelected(tap.link)} />
-              <Style.Tap disabled={tap.disabled}>
-                <div>{tap.svg}</div>
-                <span>{tap.title}</span>
-              </Style.Tap>
-            </NavLink>
-          ))}
-        </Style.TapContainer>
-        <Style.TapContainer>
-          <span>기타</span>
-          {ETC.map((etc) =>
-            etc.link ? (
-              <NavLink to={`/group/${groupID}/${etc.link}`} key={etc.title}>
-                <Style.Selected isSelected={isSelected(etc.link)} />
-                <Style.Tap key={etc.title}>
+      <Suspense fallback={<div>loading....</div>}>
+        <Style.Layout>
+          <Style.Header>
+            <h1>{groupData?.title}</h1>
+          </Style.Header>
+          <Style.TapContainer>
+            <span>벌금 관리</span>
+            {GROUP_TAPS.map((tap) => (
+              <NavLink to={`/group/${groupID}/${tap.link}`} key={tap.title}>
+                <Style.Selected isSelected={isSelected(tap.link)} />
+                <Style.Tap disabled={tap.disabled}>
+                  <div>{tap.svg}</div>
+                  <span>{tap.title}</span>
+                </Style.Tap>
+              </NavLink>
+            ))}
+          </Style.TapContainer>
+          <Style.TapContainer>
+            <span>기타</span>
+            {ETC.map((etc) =>
+              etc.link ? (
+                <NavLink to={`/group/${groupID}/${etc.link}`} key={etc.title}>
+                  <Style.Selected isSelected={isSelected(etc.link)} />
+                  <Style.Tap key={etc.title}>
+                    <div>{etc.svg}</div>
+                    <span>{etc.title}</span>
+                  </Style.Tap>
+                </NavLink>
+              ) : (
+                <Style.Tap key={etc.title} onClick={handelEditModal}>
                   <div>{etc.svg}</div>
                   <span>{etc.title}</span>
                 </Style.Tap>
-              </NavLink>
-            ) : (
-              <Style.Tap key={etc.title} onClick={handelEditModal}>
-                <div>{etc.svg}</div>
-                <span>{etc.title}</span>
-              </Style.Tap>
-            ),
-          )}
-        </Style.TapContainer>
-      </Style.Layout>
+              ),
+            )}
+          </Style.TapContainer>
+        </Style.Layout>
+      </Suspense>
       <Modal.Frame isOpen={showEditModal} onClick={handelEditModal}>
         <div>EditModal</div>
       </Modal.Frame>
