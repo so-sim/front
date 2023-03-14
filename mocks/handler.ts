@@ -1,5 +1,4 @@
 import { rest } from 'msw';
-import { groupHandler } from './api/groupHandler';
 
 const groupList = [
   { title: '전국 노래 자랑', admin: '윤하나둘셋넷', coverColor: '#f86565', id: '1' },
