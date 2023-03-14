@@ -1,17 +1,20 @@
 import { Card } from '..';
-import { GroupInfo } from '../../CardList';
 import * as Style from './style';
-import { USER } from '../../../../../assets/icons/User';
+import { USER } from '@/assets/icons/User';
+import { useNavigate } from 'react-router-dom';
+import { CoverGroupInfo } from '@/api/Group';
 
-export const GroupCard = ({ title, color, people }: GroupInfo) => {
+export const GroupCard = ({ title, coverColor, admin }: CoverGroupInfo) => {
+  const navigate = useNavigate();
+
   return (
-    <Card onClick={() => console.log('hi')}>
-      <Style.GroupColor color={color} />
+    <Card onClick={() => navigate(`/group/1`)}>
+      <Style.GroupColor color={coverColor} />
       <Style.GroupInfo>
         <Style.GroupTitle>{title}</Style.GroupTitle>
         <Style.GroupPeople>
           <Style.GroupIcon>{USER.GROUP_MD}</Style.GroupIcon>
-          <Style.GroupPeopleNumber>{people}명</Style.GroupPeopleNumber>
+          <Style.GroupAdminName>{admin}</Style.GroupAdminName>
         </Style.GroupPeople>
       </Style.GroupInfo>
     </Card>

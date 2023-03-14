@@ -1,9 +1,10 @@
 import { createRoot } from 'react-dom/client';
 import React from 'react';
 import App from './App';
-import { worker } from './mocks/worker';
+window.React = React;
 
 if (process.env.NODE_ENV === 'development') {
+  const { worker } = require('./mocks/browser');
   worker.start();
 }
 
